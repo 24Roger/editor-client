@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:4000',
+  baseURL: import.meta.env.VITE_API,
 })
 
 export const findProjects = async () => {
@@ -9,9 +9,11 @@ export const findProjects = async () => {
   const data = response.data.projects;
 
   return data.map(project => {
+    console.log(project.data)
     return {
       uid: project.uid,
-      data: JSON.parse(project.data)
+      data: project.data,
+
     }
   });
 };

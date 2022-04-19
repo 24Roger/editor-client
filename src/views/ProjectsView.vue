@@ -10,8 +10,8 @@ export default {
   setup() {
     const store = useStore();
 
-    onMounted(async () => {
-      store.dispatch('getProjects')
+    onMounted(() => {
+       store.dispatch('getProjects')
     })
 
     const projects = computed(() => store.state.projects)
