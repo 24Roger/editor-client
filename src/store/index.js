@@ -5,7 +5,6 @@ export default createStore({
   state: {
     projects: [],
     project: {}
-
   },
   mutations: {
     setProjects(state, payload) {
@@ -25,12 +24,12 @@ export default createStore({
         console.log(error)
       }
     },
-    getData({ commit }, project) {
+    getProject({ commit }, project) {
       commit('setProject', project)
     }
   },
   getters: {
-
+    data: state => state.project.data
   },
   modules: {},
 });

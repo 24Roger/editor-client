@@ -2,7 +2,15 @@
 import Drawflow from 'drawflow';
 import styleDrawflow from 'drawflow/dist/drawflow.min.css';
 import style from '../assets/style.css';
-import { onMounted, shallowRef, h, getCurrentInstance, render, readonly, ref } from 'vue';
+import {
+  onMounted,
+  shallowRef,
+  h,
+  getCurrentInstance,
+  render,
+  readonly,
+  ref
+} from 'vue';
 import nodeScript from '../components/nodes/nodeScript.vue'
 import nodeNumber from '../components/nodes/nodeNumber.vue';
 import nodeOperations from '../components/nodes/nodeOperations.vue';
@@ -11,6 +19,7 @@ import nodeIf from '../components/nodes/nodeIf.vue';
 import nodeElse from '../components/nodes/nodeElse.vue';
 import nodeFor from '../components/nodes/nodeFor.vue';
 import { newProject } from '../api';
+import { useStore } from 'vuex';
 
 export default {
   name: 'drawflow',
@@ -65,12 +74,13 @@ export default {
         input: 1,
         output: 1,
       }
-    ])
+    ]);
 
     const editor = shallowRef({})
     const dialogVisible = ref(false)
     const dialogData = ref({})
     const Vue = { version: 3, h, render };
+    const store = useStore();
     const internalInstance = getCurrentInstance()
     internalInstance.appContext.app._context.config.globalProperties.$df = editor;
 
@@ -125,7 +135,14 @@ export default {
 
       const nodeSelected = listNodes.find(ele => ele.item == name);
       editor.value.addNode(name, nodeSelected.input, nodeSelected.output, pos_x, pos_y, name, {}, name, 'vue');
+    }
 
+    let project;
+    
+    if (store.getters.data === undefined) {
+      project = {};
+    } else {
+      project = store.getters.data;
     }
 
     onMounted(() => {
@@ -141,18 +158,25 @@ export default {
       editor.value.start();
 
       editor.value.registerNode('nodeScript', nodeScript, {}, {});
-      editor.value.registerNode('nodeNumber', nodeNumber, { number: 1 }, {});
+      editor.value.registerNode('nodeNumber', nodeNumber, {}, {});
       editor.value.registerNode('nodeOperations', nodeOperations, {}, {});
       editor.value.registerNode('nodeAssign', nodeAssign, {}, {});
       editor.value.registerNode('nodeIf', nodeIf, {}, {});
       editor.value.registerNode('nodeElse', nodeElse, {}, {});
       editor.value.registerNode('nodeFor', nodeFor, {}, {});
 
-      editor.value.import({ "drawflow": { "Home": { "data": {} } } })
+      editor.value.import({ "drawflow": { "Home": { "data": project } } })
     })
 
     return {
-      exportEditor, listNodes, drag, drop, allowDrop, dialogVisible, dialogData, saveEditor
+      exportEditor,
+      listNodes,
+      drag,
+      drop,
+      allowDrop,
+      dialogVisible,
+      dialogData,
+      saveEditor
     }
   }
 }
@@ -226,7 +250,6 @@ export default {
   padding: 10px;
   margin: 10px 0px;
   cursor: move;
-
 }
 
 #drawflow {

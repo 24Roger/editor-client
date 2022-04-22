@@ -47,5 +47,4 @@ export default defineComponent({
     <nodeHeader title="Number" />
     <el-input-number type="number" v-model="number" @change="updateValue" size="small" />
   </div>
-
 </template>

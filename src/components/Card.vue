@@ -1,5 +1,6 @@
 <script >
-import { useStore } from 'vuex'
+import { useStore } from 'vuex';
+import router from '../router';
 
 export default {
   props: ['project'],
@@ -7,13 +8,14 @@ export default {
     const store = useStore();
 
     const openProject = (project) => {
-      store.dispatch('getData', project)
+      store.dispatch('getProject', project);
+      router.push('/drawflow');
     }
 
     return {
       openProject
     }
-  }
+  },
 }
 </script>
 
@@ -26,7 +28,8 @@ export default {
           <span>{{ project.uid }}</span>
           <div class="bottom">
             <time class="time">Draw Flow</time>
-            <el-button type="success" class="button" @click="openProject(project)" round align-center>Open</el-button>
+            <el-button type="success" class="button" @click="openProject(project)" round align-center>Open
+            </el-button>
           </div>
         </div>
       </el-card>

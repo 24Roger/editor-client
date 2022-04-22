@@ -5,8 +5,8 @@ import {
     getCurrentInstance,
     nextTick,
     onMounted
-} from 'vue'
-import nodeHeader from './nodeHeader.vue'
+} from 'vue';
+import nodeHeader from './nodeHeader.vue';
 
 export default defineComponent({
     components: {
@@ -67,9 +67,9 @@ export default defineComponent({
                     placeholder="Please input" />
             </el-drawer>
         </teleport>
-
     </div>
 </template>
+
 <style scoped>
 p {
     margin: 5px;

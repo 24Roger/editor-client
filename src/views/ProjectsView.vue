@@ -12,14 +12,12 @@ export default {
 
     onMounted(() => {
        store.dispatch('getProjects')
-    })
+    });
 
-    const projects = computed(() => store.state.projects)
-    const data = computed(() => store.state.project)
+    const projects = computed(() => store.state.projects);
 
     return {
-      projects,
-      data
+      projects
     }
   }
 }
